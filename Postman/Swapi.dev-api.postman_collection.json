@@ -1,0 +1,436 @@
+{
+	"info": {
+		"_postman_id": "8083b9ea-9d08-4b78-abcd-17b35df36a19",
+		"name": "swapi.dev/api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://swapi.dev/api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1. Correct response format JSON\r",
+							"pm.test('(Correct response format JSON', function(){\r",
+							"    pm.response.to.have.jsonBody()\r",
+							"})\r",
+							"   \r",
+							"//2. We have all the declared fields in the response\r",
+							"pm.test(\"Check that we have all declared fields\", function(){\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"people\")\r",
+							"    pm.expect(jsonData).to.have.property(\"planets\")\r",
+							"    pm.expect(jsonData).to.have.property(\"films\")\r",
+							"    pm.expect(jsonData).to.have.property(\"species\")\r",
+							"    pm.expect(jsonData).to.have.property(\"vehicles\")\r",
+							"    pm.expect(jsonData).to.have.property(\"starships\")\r",
+							"})\r",
+							"//3. Field value is not NULL\r",
+							"pm.test(\"Check if value isn't NULL\", function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.people).not.equal(null);\r",
+							"})\r",
+							"//4.Check value isn't empty\r",
+							"pm.test(\"Check if value isn't empty\", function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.people).not.equal(\"\");\r",
+							"})\r",
+							"//5. Check if field corresponds to a specific value\r",
+							"pm.test(\"Check if field corresponds to a specific value\",function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.people).to.equal(\"https://swapi.dev/api/people/\");\r",
+							"    pm.expect(jsonData.planets).to.equal(\"https://swapi.dev/api/planets/\");\r",
+							"    pm.expect(jsonData.films).to.equal(\"https://swapi.dev/api/films/\");\r",
+							"    pm.expect(jsonData.species).to.equal(\"https://swapi.dev/api/species/\");\r",
+							"    pm.expect(jsonData.vehicles).to.equal(\"https://swapi.dev/api/vehicles/\");\r",
+							"    pm.expect(jsonData.starships).to.equal(\"https://swapi.dev/api/starships/\");\r",
+							"})\r",
+							"//6. Status code is 200\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"}) \r",
+							"//7.Status code is OK\r",
+							"pm.test(\"Status code is OK\", () => {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"//8.Response time is less than 1000ms\r",
+							"pm.test(\"Response time is less than 1000ms\", ()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+							"});\r",
+							"//9. There is a specific header in the response\r",
+							"pm.test(\"There is a specific header in the response\", ()=>{\r",
+							"    pm.response.to.have.header(\"Content-Type\")\r",
+							"});\r",
+							"//10.The response has a specific header with a specific value\r",
+							"pm.test(\"The response has a specific header with a specific value\", function(){\r",
+							"    pm.response.to.be.header(\"Content-Type\",\"application/json\")\r",
+							"});\r",
+							"\r",
+							"//11.Cookie exists\r",
+							"pm.test(\"Cookie exists\", function(){\r",
+							"    pm.cookies.has(\"csrftoken\")\r",
+							"})\r",
+							"\r",
+							"//12.Cookie has value\r",
+							"pm.test(\"Cookie has value\", function(){\r",
+							"    try{\r",
+							"        var MY_COOKIE = pm.cookies.get(\"csrftoken\");\r",
+							"        console.log(MY_COOKIE);\r",
+							"    }\r",
+							"    catch(e) {\r",
+							"        console.log(\"SOME PROBLEM WITH COOKIE\" + e);\r",
+							"    }\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "swapi.dev"
+					},
+					{
+						"key": "cache-control",
+						"value": "max-age=0"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "dnt",
+						"value": "1"
+					},
+					{
+						"key": "upgrade-insecure-requests",
+						"value": "1"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
+					},
+					{
+						"key": "accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "none"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "navigate"
+					},
+					{
+						"key": "sec-fetch-user",
+						"value": "?1"
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "document"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "_ga=GA1.2.2001984438.1643309888; _gid=GA1.2.1534351674.1643309888; _gat_gtag_UA_163610532_1=1"
+					},
+					{
+						"key": "if-none-match",
+						"value": "\"6a034ca25399b46efae899d9930ad41e\""
+					}
+				],
+				"url": {
+					"raw": "https://swapi.dev/api/?format=json",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						""
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swapi.dev/api/?format=json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"\r",
+							"var schema = {\r",
+							"    //specify the type of object\r",
+							"    \"type\":\"object\",\r",
+							"    //specify requires properties\r",
+							"    \"requires\": [\"people\", \"planets\", \"films\", \"species\", \"vehicles\", \"starships\"],\r",
+							"    // describe the properties\r",
+							"    \"properties\":{\r",
+							"        \"people\":{\"type\":\"string\"},\r",
+							"        \"planets\":{\"type\":\"string\"},\r",
+							"        \"films\":{\"type\":\"string\"},\r",
+							"        \"species\":{\"type\":\"string\"},\r",
+							"        \"vehicles\":{\"type\":\"string\"},\r",
+							"        \"starships\":{\"type\":\"string\"},\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Body is correct\", function(){\r",
+							"    pm.expect(tv4.validate(data,schema)).to.be.true;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "swapi.dev"
+					},
+					{
+						"key": "cache-control",
+						"value": "max-age=0"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "dnt",
+						"value": "1"
+					},
+					{
+						"key": "upgrade-insecure-requests",
+						"value": "1"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
+					},
+					{
+						"key": "accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "none"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "navigate"
+					},
+					{
+						"key": "sec-fetch-user",
+						"value": "?1"
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "document"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "_ga=GA1.2.2001984438.1643309888; _gid=GA1.2.1534351674.1643309888; _gat_gtag_UA_163610532_1=1"
+					},
+					{
+						"key": "if-none-match",
+						"value": "\"6a034ca25399b46efae899d9930ad41e\""
+					}
+				],
+				"url": {
+					"raw": "https://swapi.dev/api/?format=json",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						""
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swapi.dev/api/people/1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"\r",
+							"var schema = {\r",
+							"    \"type\":\"object\",\r",
+							"    \"required\":[\"name\", \"homeworld\", \"films\", \"species\", \"vehicles\", \"starships\"],\r",
+							"    \"property\":{\r",
+							"        \"name\":{\"type\":\"string\"},\r",
+							"        \"homeworld\":{\"type\":\"string\"},\r",
+							"        \"films\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"items\":{\"type\":\"string\"}\r",
+							"        },\r",
+							"        \"species\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"items\":{\"type\":\"string\"}\r",
+							"        },\r",
+							"        \"vehicles\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"items\":{\"type\":\"string\"}\r",
+							"        },\r",
+							"        \"starships\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"items\":{\"type\":\"string\"}\r",
+							"        }\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Body is correct\", function(){\r",
+							"    pm.expect(tv4.validate(data,schema)).to.be.true;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "swapi.dev"
+					},
+					{
+						"key": "cache-control",
+						"value": "max-age=0"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "dnt",
+						"value": "1"
+					},
+					{
+						"key": "upgrade-insecure-requests",
+						"value": "1"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
+					},
+					{
+						"key": "accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "none"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "navigate"
+					},
+					{
+						"key": "sec-fetch-user",
+						"value": "?1"
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "document"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "_ga=GA1.2.2001984438.1643309888; _gid=GA1.2.1534351674.1643309888; _gat_gtag_UA_163610532_1=1"
+					},
+					{
+						"key": "if-none-match",
+						"value": "\"6a034ca25399b46efae899d9930ad41e\""
+					}
+				],
+				"url": {
+					"raw": "https://swapi.dev/api/people/1?format=json",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"people",
+						"1"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
