@@ -1,3 +1,5 @@
+/* В файл HTML вставить <script src="\HW_JS_4.js"> </script>*/
+
 let age_2 = 18
 let age_3 = 60
 
