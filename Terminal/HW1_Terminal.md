@@ -10,14 +10,14 @@
 |$ touch 1.txt 2.txt 3.txt 4.json 5.json| 6) Создать 5 файлов (3 txt, 2 json) |
 |$ mkdir qa_1_1 qa_1_2 qa_1_3| 7) Создать 3 папки |
 |$ ls -la| 8) Вывести список содержимого папки |
-|$ cat 1.txt| 9) + Открыть любой txt файл |
-|$ cat >> 1.txt|10) + написать туда что-нибудь, любой текст.|
-|Ctr+C  <br/>  $ vim 1.txt -->Ins --> редактируем файл --> Ecs --> :wq (:q! не сохранять) --> Enter | 11) + сохранить и выйти |
+|$ cat 1.txt| 9) Открыть любой txt файл |
+|$ cat >> 1.txt|10) написать туда что-нибудь, любой текст.|
+|Ctr+C  <br/>  $ vim 1.txt -->Ins --> редактируем файл --> Ecs --> :wq (:q! не сохранять) --> Enter | 11) сохранить и выйти |
 |$ cd ..| 12) Выйти из папки на уровень выше |
 |$ mv 2.txt 3.txt /qa_2 | 13) переместить любые 2 файла, которые вы создали, в любую другую папку |
-|$ cp 4.json  /c/Users/Olga/Git/QA_Course/qa_3/4.json | 14) скопировать любые 2 файла, которые вы создали, в любую другую папку |
+|$ cp 4.json  ./qa_3/4.json | 14) скопировать любые 2 файла, которые вы создали, в любую другую папку |
 |$ find -name 1.txt | 15) Найти файл по имени |
-|$ tail -f readme.txt | grep Data| 16) просмотреть содержимое в реальном времени |
+|$ tail -f readme.txt  grep Data| 16) просмотреть содержимое в реальном времени |
 |$ head -2 1.txt | 17) вывести несколько первых строк из текстового файла |
 |$ tail -3 1.txt| 18) вывести несколько последних строк из текстового файла |
 |$ less 1.txt|19) просмотреть содержимое длинного файла|
@@ -42,15 +42,13 @@ $ curl -X POST http://162.55.220.72:5005/get_method? --data "name=Olga" --data "
 $ vim script.scr  
 
 #!/bin/bash   
-cd /c/Users/Olga/Git/QA_Course/qa_1/qa_1_1   
+cd qa_1/qa_1_1   
 mkdir folder1 folder2 folder3   
 cd folder1   
 touch file1.txt file2.txt file3.txt file4.json file5.json   
 mkdir folder11 folder12 folder13  
 ls l  
-mv /c/Users/Olga/Git/QA_Course/qa_1/qa_1_1/folder1/file2.txt   
-	/c/Users/Olga/Git/QA_Course/qa_1/qa_1_1/folder1/file3.txt   
-	/c/Users/Olga/Git/QA_Course/qa_1/qa_1_1/folder2/file3.txt  
+mv ./folder1/file2.txt ./folder1/file3.txt ./folder2/file3.txt  
 --> Esc --> :wq  
 
 $ ./script.scr
