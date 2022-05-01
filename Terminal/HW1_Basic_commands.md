@@ -41,7 +41,7 @@ $ curl -X POST http://162.55.220.72:5005/get_method? --data "name=Olga" --data "
 
 $ vim script.scr  
 
-  #!/bin/bash   
+>  #!/bin/bash   
   cd qa_1/qa_1_1   
   mkdir folder1 folder2 folder3   
   cd folder1   
