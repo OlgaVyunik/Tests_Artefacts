@@ -41,15 +41,15 @@ $ curl -X POST http://162.55.220.72:5005/get_method? --data "name=Olga" --data "
 
 $ vim script.scr  
 
-#!/bin/bash   
-cd qa_1/qa_1_1   
-mkdir folder1 folder2 folder3   
-cd folder1   
-touch file1.txt file2.txt file3.txt file4.json file5.json   
-mkdir folder11 folder12 folder13  
-ls l  
-mv ./folder1/file2.txt ./folder1/file3.txt ./folder2/file3.txt  
---> Esc --> :wq  
+  #!/bin/bash   
+  cd qa_1/qa_1_1   
+  mkdir folder1 folder2 folder3   
+  cd folder1   
+  touch file1.txt file2.txt file3.txt file4.json file5.json   
+  mkdir folder11 folder12 folder13  
+  ls l  
+  mv ./folder1/file2.txt ./folder1/file3.txt ./folder2/file3.txt  
+  --> Esc --> :wq  
 
 $ ./script.scr
 
