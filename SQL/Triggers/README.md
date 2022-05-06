@@ -8,6 +8,7 @@ subscriber (and keep that data up-to-date).
 - average days count for "a subscriber keeps a book";      
 - average books count for "returned by a subscriber".     
 ### 02 - Using Triggers to Ensure Data Consistency
+=====
 3. Modify "subscribers" table to store the number of books taken by each subscriber (and keep that data up-to-date).        
 4. Modify "genres" table to store the number of books in each genre (and keep that data up-to-date).     
 ### 03 - Using Triggers to Control Data Modification    
