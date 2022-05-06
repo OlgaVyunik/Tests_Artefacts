@@ -1,5 +1,6 @@
 ## Contents of sql files
 ### 01 - Using Triggers to Update Caching Tables and Fields
+----------------------------------------------------
 1. Modify "subscribers" table to store the last visit date for each
 subscriber (and keep that data up-to-date).   
 2.  Create "averages" table to store the following up-to-date information:     
