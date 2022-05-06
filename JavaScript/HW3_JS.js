@@ -83,8 +83,7 @@ const users = [
 c = users.filter(i=>i.registrationDate =='09.10.2021' || i.registrationDate =='10.10.2021')
 console.log(c)
 
-//Task 2*
-// Откройте в VSCode task2.json файл. Скопируйте из него JSONку, вставьте в свой код (присвоив в переменную).
+//Task 2. (*)
 // Дан массив объектов. Каждый объект является идентификационной карточкой человека. Нам нужно хранить только уникальные значения в этом массиве. Реализуйте функцию, которая будет выполнять эту работу.
 const users_info = [{
     "name": "Leanne Graham",
@@ -449,16 +448,27 @@ console.log(unique)
 let users_info2 = JSON.stringify(unique)
 console.log(users_info2)
 
-// Task 2*** Реализуйте считывание из JSONки из файла task2.json с помощью, например, модуля fs. для дальнейшего использования в функции, описанной в задании
+//Variant 2
+let unique3 = []
+users_info.forEach((el)=>{
+  if(unique3.indexOf(JSON.stringify(el)) === -1){
+    unique3.push(JSON.stringify(el))
+  }
+})
+console.log(unique3)
+
+// Task 2.1 (***) Реализуйте считывание из JSONки из файла task2.json с помощью, например, модуля fs. для дальнейшего использования в функции, описанной в задании
 const fs = require('fs'); 
 let rawdata = fs.readFileSync('task2.json'); 
 let users_info3 = JSON.parse(rawdata); 
 let unique2 = Array.from(new Set(users_info3.map(item => JSON.stringify(item)))).map(item => JSON.parse(item))
 console.log(unique2)
+console.log(unique2.length) // проверить длину
+
 
 // Task 3**
 // В файле task3.txt найдете структуру компании и задания, необходимые выполнить.
-// 1. Вывести все предприятия и их отделы. Рядом указать количество сотрудников. Для предприятия посчитать сумму всех сотрудников во всех отделах.
+// 3.1. Вывести все предприятия и их отделы. Рядом указать количество сотрудников. Для предприятия посчитать сумму всех сотрудников во всех отделах.
 // **Пример:**
 // Предприятие 1 (45 сотрудников)
 // - Отдел тестирования (10 сотрудников)
@@ -525,7 +535,7 @@ const enterprises = [
       ]
     }
   ]
-  function buildTree(tree) {
+function buildTree(tree) {
     let result = ''
     tree.forEach(function(e) {
         let summa = 0
@@ -552,8 +562,182 @@ const enterprises = [
 return result;
 }
 console.log(buildTree(enterprises)) 
+
+//3.2. Написать функцию, которая будет принимать 1 аргумент (id отдела или название отдела и возвращать название предприятия, к которому относится).
+//Пример:
+//getEnterpriseName(4) // Предприятие 1
+//getEnterpriseName("Отдел маркетинга") // Предприятие 2
+// Variant 1
+function getEnterpriseName(i){
+    let result = ''
+    enterprises.forEach(function(e){
+        if (e.id === i){
+            result = 'Это id предриятия, а не отдела'
+        }
+        if(e.departments){
+            e.departments.forEach(function(x){
+                if(x.id === i || x.name === i){
+                    result = e.name
+                }
+            })
+        }
+    })
+return result   
+}
+console.log(getEnterpriseName(4))
+console.log(getEnterpriseName("Отдел маркетинга"))
+
+//Variant 2
+const getEnterpriseByDepartment = function(val){
+  let enterprise
+  enterprises.forEach(ent=>{
+    let department
+    if(ent.departments){
+      department = ent.departments.find(dept => { return dept.id == val || dept.name == val})
+    }
+    if(department){
+      enterprise = ent
+    }
+  })
+  return enterprise.name ? enterprise.name : 'There is no organization with such department'
+}
+console.log(getEnterpriseByDepartment(2))
+console.log(getEnterpriseByDepartment("Отдел маркетинга"))
+
+// 3.3. Написать функцию, которая будет добавлять предприятие. В качестве аргумента принимает название предприятия
+function addEnterprise(name){
+    let a = Math.max.apply(Math, enterprises[2].departments.map(function(o) { return o.id; }))
+    let b = Math.max.apply(Math, enterprises.map(function(o) { return o.id; }))
+    let id = Math.max(a,b) + 1
+    result = enterprises.push({
+      id: id, 
+      name : name,
+      departments : []
+    })
+    return result
+}
+addEnterprise("Название нового предприятия")
+addEnterprise("Рога и копыта")
+addEnterprise("Fjfdjfndk")
+console.log(enterprises)
+
+// getNewId можно вынести в отдельную функцию
+function getNewId(){
+  let id = 0
+  let a = Math.max.apply(Math, enterprises[2].departments.map(function(o) { return o.id; }))
+  let b = Math.max.apply(Math, enterprises.map(function(o) { return o.id; }))
+  id = Math.max(a,b) + 1
+  return id
+}
+// or getNewId_1
+function getNewId_1(company){
+  let maxId = company[0].id
+  company.forEach((el)=>{
+    if(maxId < el.id){
+      maxId = el.id
+    }
+    if(el.departments){
+      el.departments.forEach((elem)=>{
+        if (maxId < elem.id){
+          maxId = elem.id
+        }
+      })
+    }
+  })
+  return maxId + 1
+}
+
+// 3.4. Написать функцию, которая будет добавлять отдел в предприятие. В качестве аргумента принимает id предприятия, в которое будет добавлен отдел и название отдела.
+function getEnterprise(val){
+  let e = enterprises.find(el => el.id == val || el.name == val)
+  return e ? e : 'No such organization'
+}
+//console.log(getEnterprise(1))
+
+function addDepartment(id, name, employees_count = 0){
+  const ent = getEnterprise(id)
+  if(typeof ent == 'object'){
+    ent.departments.push({
+      id: getNewId_1(enterprises),
+      name: name,
+      employees_count: employees_count,
+    })
+  } else console.log('No such organization')
+}
+
+addDepartment(9, "Название нового отдела", 16)
+addDepartment(9, "Отдел Хомячков", 16)
+console.log(enterprises[2])
+
+// 3.5. Написать функцию для редактирования названия предприятия. Принимает в качестве аргумента id предприятия и новое имя предприятия.
+function editEnterprise(id, newname){
+  ent = getEnterprise(id)
+    if(typeof ent == 'object'){
+      ent.name = newname
+    } else console.log(ent)
+  }
+
+editEnterprise(1, "Новое название предприятия")
+console.log(enterprises)
+
+// 3.6. Написать функцию для редактирования названия отдела. Принимает в качестве аргумента id отдела и новое имя отдела.
+function getDepartment(val){
+  let dep
+  enterprises.forEach((company)=>{
+    const e = company.departments.find((el)=>{
+      return el.id == val || el.name == val
+    })
+    if(e) dep = e
+  })
+  return dep ? dep : 'No such department'
+}
+//console.log(getDepartment(2))
+
+function editDepartment(id, name){
+  const department = getDepartment(id)
+  if(typeof department == 'object'){
+    department.name = name
+  } else console.log(department)
+}
+editDepartment(7, "Новое название отдела")
+console.log(enterprises)
+
+
+// 3.7. Написать функцию для удаления предприятия. В качестве аргумента принимает id предприятия.
+function deleteEnterprise(id){
+  enterprises.forEach((enterprise, index)=>{
+    if(enterprise.id === id){
+      enterprises.splice(index, 1)
+    }
+  })
+}
+deleteEnterprise(9)
+
+// 3.8. Написать функцию для удаления отдела. В качестве аргумента принимает id отдела. Удалить отдел можно только, если в нем нет сотрудников.
+function deleteDepartment(id){
+  enterprises.forEach(e=>{
+    let index = e.departments.findIndex(d=>d.id === id && d.employees_count === 0)
+    if(index !== -1){
+      e.departments.splice(index, 1)
+    }
+  })
+}
+deleteDepartment(10)
+
+// 3.9. Написать функцию для переноса сотрудников между отделами одного предприятия. В качестве аргумента принимает два значения: id отдела, из которого будут переноситься сотрудники и id отдела, в который будут переноситься сотрудники).
+function moveEmployees(currentId, newId){
+  let currentDepartment = getDepartment(currentId)
+  let newDepartment = getDepartment(newId)
+  if(typeof currentDepartment  == 'object' && typeof newDepartment == 'object'){
+    newDepartment.employees_count += currentDepartment.employees_count
+    currentDepartment.employees_count = 0
+  } else console.log('No such departmet')
+}
+
+moveEmployees(2, 3)
+
 // Task 4****
-// В файле task4.txt вы найдете разноуровневый массив объектов. Очень похожий на массив из 3го задания, только количество вложенностей может быть не ограничено. 
+// Дан разноуровневый массив объектов. Очень похожий на массив из 3го задания, только количество вложенностей может быть не ограничено. 
 // Задание: написать функцию: 
 // Функция строит древовидный список компании.
 // При ее вызове в консоль должен вывестись список подразделений компании с указанием количества сотрудников и с соблюдение вложенности подразделений.
@@ -634,6 +818,19 @@ const company = [
     }
   ]
 //Вариант 1 
+const checkArray = function(company, counter = ""){
+  company.forEach((comp)=>{
+    console.log(`${counter}${counter === "" ? "" : " "}${comp.name} (${comp.users_count})`)
+    if (comp.children){
+      counter += "--"
+      checkArray(comp.children, counter)
+      counter = counter.slice(0, -2)
+    }
+  })
+}
+checkArray(company)
+
+//Вариант 2
 function buildTree1(tree, prefix) {
     if (typeof prefix === 'undefined')
       prefix = '';
@@ -648,6 +845,7 @@ function buildTree1(tree, prefix) {
     return result;
   }
   console.log(buildTree1(company))
+
 // Вариант 2 (другое оформление)
   function buildTree2(tree, prefix) {
     if (typeof prefix === 'undefined')
